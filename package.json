@@ -1,0 +1,20 @@
+{
+  "name": "hardhat-holograph-contract-builder",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Builds smart contracts in preparation for compiling.",
+  "keywords": [
+    "hardhat"
+  ],
+  "repository": "https://github.com/cxip-labs/hardhat-holograph-contract-builder",
+  "author": "cxip-labs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "peerDependencies": {
+    "hardhat": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.0.0",
+    "hardhat": "^2.0.0"
+  }
+}
