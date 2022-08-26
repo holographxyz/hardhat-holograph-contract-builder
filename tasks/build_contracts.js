@@ -26,8 +26,9 @@ const hexify = function (input, prepend) {
 
 const slotRegex = /precomputeslot\("([^"]+)"\)/i;
 const slotHexRegex = /precomputeslothex\("([^"]+)"\)/i;
+const keccak256Regex = /precomputekeccak256\("([^"]+)"\)/i;
 const precomputeSlots = function (text) {
-  let result, str, slot, index;
+  let result, str, slot, index, keccak;
   while ((result = text.match(slotRegex))) {
     str = result[0];
     slot =
@@ -49,6 +50,12 @@ const precomputeSlots = function (text) {
       ).padStart(64, '0') + '"';
     index = result.index;
     text = text.slice(0, index) + slot + text.slice(index + str.length);
+  }
+  while((result = text.match(keccak256Regex))) {
+    str = result[0];
+    keccak = web3.utils.keccak256(result[1])
+    index = result.index;
+    text = text.slice(0, index) + keccak + text.slice(index + str.length);
   }
   return text;
 };
