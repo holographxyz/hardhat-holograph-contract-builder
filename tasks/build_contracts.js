@@ -25,6 +25,7 @@ const hexify = function (input, prepend) {
 };
 
 const slotRegex = /precomputeslot\("([^"]+)"\)/i;
+const slotHexRegex = /precomputeslothex\("([^"]+)"\)/i;
 const precomputeSlots = function (text) {
   let result, str, slot, index;
   while ((result = text.match(slotRegex))) {
@@ -35,6 +36,17 @@ const precomputeSlots = function (text) {
         web3.utils.toHex(web3.utils.toBN(web3.utils.keccak256(result[1])).sub(web3.utils.toBN(1))),
         false
       ).padStart(64, '0');
+    index = result.index;
+    text = text.slice(0, index) + slot + text.slice(index + str.length);
+  }
+  while ((result = text.match(slotHexRegex))) {
+    str = result[0];
+    slot =
+      'hex"' +
+      hexify(
+        web3.utils.toHex(web3.utils.toBN(web3.utils.keccak256(result[1])).sub(web3.utils.toBN(1))),
+        false
+      ).padStart(64, '0') + '"';
     index = result.index;
     text = text.slice(0, index) + slot + text.slice(index + str.length);
   }
