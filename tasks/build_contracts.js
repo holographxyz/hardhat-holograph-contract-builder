@@ -54,6 +54,9 @@ const precomputeSlots = function (text) {
   while((result = text.match(keccak256Regex))) {
     str = result[0];
     keccak = web3.utils.keccak256(result[1])
+    if (keccak == null) {
+       keccak = '0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470';
+    }
     index = result.index;
     text = text.slice(0, index) + keccak + text.slice(index + str.length);
   }
