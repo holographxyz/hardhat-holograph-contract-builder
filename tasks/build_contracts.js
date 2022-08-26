@@ -27,8 +27,9 @@ const hexify = function (input, prepend) {
 const slotRegex = /precomputeslot\("([^"]+)"\)/i;
 const slotHexRegex = /precomputeslothex\("([^"]+)"\)/i;
 const keccak256Regex = /precomputekeccak256\("([^"]*)"\)/i;
-const precomputeSlots = function (text) {
-  let result, str, slot, index, keccak;
+const functionsigRegex = /functionsig\("([^"]+)"\)/i;
+const precompute = function (text) {
+  let result, str, slot, index, keccak, sig;
   while ((result = text.match(slotRegex))) {
     str = result[0];
     slot =
@@ -60,11 +61,21 @@ const precomputeSlots = function (text) {
     index = result.index;
     text = text.slice(0, index) + keccak + text.slice(index + str.length);
   }
+  while((result = text.match(functionsigRegex))) {
+    str = result[0];
+    keccak = web3.utils.keccak256(result[1])
+    if (keccak == null) {
+       keccak = '0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470';
+    }
+    sig = keccak.substring(0, 10);
+    index = result.index;
+    text = text.slice(0, index) + sig + text.slice(index + str.length);
+  }
   return text;
 };
 
 const replaceValues = function (data, buildConfig, config) {
-  data = precomputeSlots(data);
+  data = precompute(data);
   Object.keys(buildConfig).forEach(function (key, index) {
     data = data.replace(new RegExp(buildConfig[key], 'gi'), config[key]);
   });
