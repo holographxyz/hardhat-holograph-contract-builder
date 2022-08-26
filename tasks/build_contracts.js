@@ -26,7 +26,7 @@ const hexify = function (input, prepend) {
 
 const slotRegex = /precomputeslot\("([^"]+)"\)/i;
 const slotHexRegex = /precomputeslothex\("([^"]+)"\)/i;
-const keccak256Regex = /precomputekeccak256\("([^"]+)"\)/i;
+const keccak256Regex = /precomputekeccak256\("([^"]*)"\)/i;
 const precomputeSlots = function (text) {
   let result, str, slot, index, keccak;
   while ((result = text.match(slotRegex))) {
