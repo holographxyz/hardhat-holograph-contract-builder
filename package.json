@@ -1,6 +1,6 @@
 {
   "name": "@holographxyz/hardhat-holograph-contract-builder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "holographxyz",
   "description": "Builds smart contracts in preparation for compiling.",
@@ -20,7 +20,8 @@
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
-    "tasks"
+    "tasks",
+    "index.d.ts"
   ],
   "peerDependencies": {
     "hardhat": "^2.0.0"
