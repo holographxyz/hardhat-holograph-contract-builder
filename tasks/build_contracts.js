@@ -122,15 +122,17 @@ task('holograph-build-contracts', 'Builds smart contracts in preparation for com
   const sourceDir = hre.config.paths.root + '/src';
   const deployDir = hre.config.paths.root + '/contracts';
   const { SOLIDITY_VERSION } = require(hre.config.paths.root + '/config/env');
-  const buildConfig = JSON.parse(fs.readFileSync(hre.config.paths.root + '/config/build.config.json', 'utf8'));
+  const buildConfig = {
+    holographLicenseHeader: '\\/\\*HOLOGRAPH_LICENSE_HEADER\\*\\/',
+    solidityCompilerVersion: '\\/\\*SOLIDITY_COMPILER_VERSION\\*\\/'
+  };
   const license = fs.readFileSync(hre.config.paths.root + '/config/license', 'utf8');
   const version = 'pragma solidity ' + SOLIDITY_VERSION + ';';
   const config = Object.assign(
     {
       holographLicenseHeader: license,
       solidityCompilerVersion: version,
-    },
-    JSON.parse(fs.readFileSync(hre.config.paths.root + '/config/' + hre.network.name + '.config.json', 'utf8'))
+    }
   );
 
   recursiveDelete(deployDir);
