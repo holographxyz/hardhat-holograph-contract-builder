@@ -28,8 +28,10 @@ const slotRegex = /precomputeslot\("([^"]+)"\)/i;
 const slotHexRegex = /precomputeslothex\("([^"]+)"\)/i;
 const keccak256Regex = /precomputekeccak256\("([^"]*)"\)/i;
 const functionsigRegex = /functionsig\("([^"]+)"\)/i;
+const asciiRegex = /asciihex\("([^"]+)"\)/i;
+
 const precompute = function (text) {
-  let result, str, slot, index, keccak, sig;
+  let result, str, slot, index, keccak, sig, ascii;
   while ((result = text.match(slotRegex))) {
     str = result[0];
     slot =
@@ -70,6 +72,12 @@ const precompute = function (text) {
     sig = keccak.substring(0, 10);
     index = result.index;
     text = text.slice(0, index) + sig + text.slice(index + str.length);
+  }
+  while((result = text.match(asciiRegex))) {
+    str = result[0];
+    ascii = '0x' + web3.utils.asciiToHex(result[1]).substring(2).padStart(64, '0');
+    index = result.index;
+    text = text.slice(0, index) + ascii + text.slice(index + str.length);
   }
   return text;
 };

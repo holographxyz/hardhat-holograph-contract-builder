@@ -1,6 +1,6 @@
 {
   "name": "@holographxyz/hardhat-holograph-contract-builder",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "holographxyz",
   "description": "Builds smart contracts in preparation for compiling.",
